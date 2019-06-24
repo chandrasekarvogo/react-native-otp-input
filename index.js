@@ -37,9 +37,11 @@ export default class OTPInputView extends Component {
   };
 
   fields = [];
-
+  componentDidUpdate() {
+    console.log(this.state.digits);
+    // if (this.state.digits.length > 0) this.setState({ digits: [] });
+  }
   componentDidMount() {
-    if (this.state.digits.length > 0) this.setState({ digits: [] });
     const focusIndex = this.props.code.length ? this.props.code.length - 1 : 0;
     this.setState(
       {
