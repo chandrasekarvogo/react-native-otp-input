@@ -7,31 +7,44 @@
  * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
 
-import React from 'react'
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import React from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert
+} from "react-native";
 
-import OTPInputView from '@twotalltotems/react-native-otp-input'
+import OTPInputView from "@twotalltotems/react-native-otp-input";
 
 export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={{marginTop: 30}} onPress={() => { this.setState({code: ""})}}> 
+        <TouchableOpacity
+          style={{ marginTop: 30 }}
+          onPress={() => {
+            this.setState({ code: "" });
+          }}
+        >
           <Text>Resend</Text>
         </TouchableOpacity>
 
         <OTPInputView
-          style={{width: '80%', height: 200}}
-          pinCount={4}
+          style={{ width: "80%", height: 200 }}
+          pinCount={6}
           code=""
           autoFocusOnLoad={true}
           // codeInputFieldStyle={styles.borderStyleBase}
           // codeInputHighlightStyle={styles.borderStyleHighLighted}
           codeInputFieldStyle={styles.underlineStyleBase}
           codeInputHighlightStyle={styles.underlineStyleHighLighted}
-          onCodeFilled = {(code => {
-              console.log(`Code is ${code}, you are good to go!`)
-          })}
+          onCodeFilled={code => {
+            Alert.alert("otp", code);
+            console.log(`Code is ${code}, you are good to go!`);
+          }}
         />
       </View>
     );
@@ -41,9 +54,9 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
   },
 
   borderStyleBase: {
@@ -52,17 +65,17 @@ const styles = StyleSheet.create({
   },
 
   borderStyleHighLighted: {
-    borderColor: "#03DAC6",
+    borderColor: "#03DAC6"
   },
 
   underlineStyleBase: {
     width: 30,
     height: 45,
     borderWidth: 0,
-    borderBottomWidth: 1,
+    borderBottomWidth: 1
   },
 
   underlineStyleHighLighted: {
-    borderColor: "#03DAC6",
-  },
+    borderColor: "#03DAC6"
+  }
 });
