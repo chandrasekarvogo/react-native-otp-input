@@ -1,16 +1,16 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   View,
   TextInput,
   TouchableWithoutFeedback,
   Clipboard,
   Platform
-} from "react-native";
-import PropTypes from "prop-types";
-import styles from "./styles";
+} from 'react-native';
+import PropTypes from 'prop-types';
+import styles from './styles';
 
 const majorVersionIOS = parseInt(Platform.Version, 10);
-const isOTPSupported = Platform.OS === "ios" && majorVersionIOS >= 12;
+const isOTPSupported = Platform.OS === 'ios' && majorVersionIOS >= 12;
 
 export default class OTPInputView extends Component {
   static propTypes = {
@@ -28,7 +28,7 @@ export default class OTPInputView extends Component {
     codeInputHighlightStyle: null,
     onCodeFilled: null,
     autoFocusOnLoad: true,
-    code: ""
+    code: ''
   };
 
   state = {
@@ -45,7 +45,7 @@ export default class OTPInputView extends Component {
     const focusIndex = this.props.code.length ? this.props.code.length - 1 : 0;
     this.setState(
       {
-        digits: this.props.code.split("")
+        digits: this.props.code.split('')
       },
       () => {
         if (focusIndex === 0 && this.props.autoFocusOnLoad) {
@@ -75,7 +75,7 @@ export default class OTPInputView extends Component {
         ) {
           this.setState(
             {
-              digits: code.split("")
+              digits: code.split('')
             },
             () => {
               this._blurAllFields();
@@ -89,23 +89,23 @@ export default class OTPInputView extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.code !== this.state.digits) {
-      this.setState(
-        {
-          digits: nextProps.code.split("")
-        },
-        () => {
-          this._focusField(0);
-        }
-      );
-    }
+    // if (nextProps.code !== this.state.digits) {
+    //   this.setState(
+    //     {
+    //       digits: nextProps.code.split("")
+    //     },
+    //     () => {
+    //       this._focusField(0);
+    //     }
+    //   );
+    // }
   }
 
   render() {
     return (
       <View style={this.props.style}>
         <TouchableWithoutFeedback
-          style={{ width: "100%", height: "100%" }}
+          style={{ width: '100%', height: '100%' }}
           onPress={() => {
             let filledPinCount = this.state.digits.filter(digit => {
               return !!digit;
@@ -115,11 +115,11 @@ export default class OTPInputView extends Component {
         >
           <View
             style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              width: "100%",
-              height: "100%"
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              width: '100%',
+              height: '100%'
             }}
           >
             {this._renderTextFields()}
@@ -133,7 +133,7 @@ export default class OTPInputView extends Component {
     const { codeInputFieldStyle, codeInputHighlightStyle } = this.props;
     const { defaultTextFieldStyle } = styles;
     return (
-      <View pointerEvents="none" key={index + "view"}>
+      <View pointerEvents="none" key={index + 'view'}>
         <TextInput
           underlineColorAndroid="rgba(0,0,0,0)"
           style={
@@ -156,7 +156,7 @@ export default class OTPInputView extends Component {
           }}
           value={this.state.digits[index]}
           keyboardType="number-pad"
-          textContentType={isOTPSupported ? "oneTimeCode" : "none"}
+          textContentType={isOTPSupported ? 'oneTimeCode' : 'none'}
           key={index}
           selectionColor="#00000000"
         />
@@ -180,7 +180,7 @@ export default class OTPInputView extends Component {
     const newTextLength = text.length;
     if (newTextLength - oldTextLength === this.props.pinCount) {
       //User copy pasted text in.
-      newdigits = text.split("").slice(oldTextLength, newTextLength);
+      newdigits = text.split('').slice(oldTextLength, newTextLength);
       this.setState({ digits: newdigits });
     } else {
       if (text.length === 0) {
@@ -188,7 +188,7 @@ export default class OTPInputView extends Component {
           newdigits = newdigits.slice(0, newdigits.length - 1);
         }
       } else {
-        text.split("").forEach(value => {
+        text.split('').forEach(value => {
           newdigits[index] = value;
           index += 1;
         });
@@ -198,7 +198,7 @@ export default class OTPInputView extends Component {
       this.setState({ digits: newdigits });
     }
 
-    let result = newdigits.join("");
+    let result = newdigits.join('');
     if (result.length >= this.props.pinCount) {
       onCodeFilled && onCodeFilled(result);
       this._focusField(this.props.pinCount - 1);
@@ -211,9 +211,9 @@ export default class OTPInputView extends Component {
   };
 
   _onKeyPress = (index, key) => {
-    if (key === "Backspace") {
+    if (key === 'Backspace') {
       if (!this.state.digits[index] && index > 0) {
-        this._onChangeText(index - 1, "");
+        this._onChangeText(index - 1, '');
         this._focusField(index - 1);
       }
     }
